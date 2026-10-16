@@ -1,0 +1,92 @@
+
+/////////////////////////////////////////////////////////////////////
+// Name:Kimberly HArlow 
+// Date:10/15/26
+// Class: CSCI 1470
+// Semester: Fall 2026
+// CSCI 1470 Instructor: Dr. Jonatan Reyes
+// Program Description: Calculates and classifies the BMI of multiple patients
+//entered by the user,ending with an error message if any input is invalid.
+/////////////////////////////////////////////////////////////////////
+#include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+// Prototypes
+double cmToMeters(double cm);
+double calBMI(double weightKg, double heightM);
+string classifyBMI(double bmi);
+
+int main()
+{
+    int numPatients;
+    string name;
+    double weight, height;
+
+    cout << "How many patients do you want to process today? ";
+    cin >> numPatients;
+   if (cin.fail() || numPatients < 1)
+    { cout << "ERROR: invalid number of patients." << endl; 
+    cout << " Program ended " << endl; 
+    return 1; 
+
+    }
+
+    cout << fixed << setprecision(2);
+
+    for (int i = 1; i <= numPatients; i++)
+    {
+        cout << "\nEnter the patient's name (#" << i << "): ";
+       cin.ignore(10000, '\n');
+    getline(cin, name);
+        cout << "Enter weight in kilograms: ";
+        cin >> weight;
+        if (cin.fail() || weight <=0 )
+    { cout << "ERROR: The value "<< weight<<" is invalid for weight in kilograms. "<< endl; 
+    cout << " Program ended ." << endl; 
+    return 1;
+    }
+        cout << "Enter height in centimeters: ";
+        cin >> height;
+        if (cin.fail() || height<=0 )
+    { 
+    cout << "ERROR: The value "<< height<<  " is invalid for height in centimeters."<< endl; 
+    cout << " Program ended ." << endl; 
+    return 1;
+    }
+     double heightM = cmToMeters(height);
+    double bmi = calBMI(weight, heightM);
+    string category = classifyBMI(bmi);
+
+cout << name << "'s BMI is: " << bmi << endl;
+cout << "The BMI classification is " << category << endl;
+    }
+
+    cout << "\nThank you for using our system." << endl;
+    return 0;
+}
+
+double cmToMeters(double cm)
+{
+    return cm / 100;
+}
+
+double calBMI(double weightKg, double heightM)
+{
+    return weightKg / (heightM * heightM);
+}
+
+
+   string classifyBMI(double bmi)
+{
+    if (bmi < 18.5)
+        return "Underweight";
+    else if (bmi < 25.0)
+        return "Normal weight";
+    else if (bmi < 30.0)
+        return "Overweight";
+    else
+        return "Obese";
+
+}
